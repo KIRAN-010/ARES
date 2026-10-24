@@ -10,7 +10,7 @@ This release is a runnable **lab platform**, not a production EDR, universal pen
 
 ## Quick start on Kali / Linux
 
-Prerequisites: Node.js **22**, npm, and Python 3 with venv support (or `uv`). Setup uses **CPython 3.11/3.12**; if neither is installed, it downloads a user-local Python 3.12 using uv. An incompatible existing `.venv` is moved to `.venv-backup-*`, not deleted. Python 3.14 is not supported by this locked dependency set. `gcc` is optional for the native research harness. Run MJ as an ordinary user, not root. Fresh Codespaces can use the included Python 3.12 dev-container configuration.
+Prerequisites: Node.js **22**, npm, and `curl` (or an installed `uv`). Setup creates a **Python 3.12** environment using `uv --seed`, which installs pip without requiring Debian's `ensurepip`/`python3-venv` package. Missing Python is downloaded automatically. If uv is absent, its official standalone installer runs in a temporary directory without sudo or shell-profile changes. Existing working Python 3.11/3.12 environments are reused; incompatible or pip-less environments are backed up to `.venv-backup-*`. Python 3.14 is not supported by this locked dependency set. `gcc` is optional for the native research harness. Fresh Codespaces can use the included Python 3.12 dev-container configuration.
 
 To recover from a previous River/Rust build failure, run `git pull --ff-only` and rerun `bash scripts/setup.sh`. Do not install Rust to work around the unsupported interpreter. For an existing supported interpreter, you can explicitly select it with `MJ_PYTHON=/path/to/python3.12 bash scripts/setup.sh`.
 

@@ -3,8 +3,11 @@ on: [push, pull_request]
 permissions:
   contents: read
 jobs:
-  setup-from-python314:
+  setup-repair:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        initial-python: ['3.12', '3.14']
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -12,12 +15,17 @@ jobs:
           python-version: '3.12'
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.14'
+          python-version: ${{ matrix.initial-python }}
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: python -m venv .venv
+      - run: |
+          python -m venv --without-pip .venv
+          mkdir -p "$RUNNER_TEMP/mj-no-ensurepip"
+          echo 'raise ImportError("ensurepip unavailable in regression test")' > "$RUNNER_TEMP/mj-no-ensurepip/ensurepip.py"
       - run: bash scripts/setup.sh
+        env:
+          PYTHONPATH: ${{ runner.temp }}/mj-no-ensurepip
       - run: .venv/bin/python -c "import sys; assert sys.version_info[:2] in {(3, 11), (3, 12)}"
   backend:
     runs-on: ubuntu-latest
