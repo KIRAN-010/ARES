@@ -37,7 +37,7 @@ Install [Ollama](https://ollama.com/download/linux), start its local service, th
 ollama pull qwen2.5:3b
 ```
 
-In Helpbot choose **Local Ollama** and enter an objective. The selected model must be installed; Ollama failures stop the mission rather than silently switching planners. The model chooses from structured actions after seeing each step's results. It cannot issue shell commands, approve changes, change scope or train the detector.
+In Helpbot choose **Local Ollama** and enter an objective. Enable **Allow recovery proposals** if wanted; this never authorizes execution. The selected model must be installed; Ollama failures stop the mission rather than silently switching planners. The model chooses from structured actions after seeing each step's results. It cannot issue shell commands, approve changes, change scope or train the detector. Advanced API clients can further restrict a mission with `allowed_tools`.
 
 For an already installed alternative model, export `MJ_MODEL` before starting MJ. The model needs reliable JSON-schema output. The default is a modest 3B model, not a claim of expert-level reasoning. [Model listing](https://ollama.com/library/qwen2.5:3b) · [Ollama chat API](https://docs.ollama.com/api/chat).
 
