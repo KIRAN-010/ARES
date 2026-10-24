@@ -81,6 +81,7 @@ with httpx.Client(base_url="http://127.0.0.1:8765/api",
 
 | Symptom | Action |
 |---|---|
+| River compilation / missing Rust on Python 3.14 | Pull the latest code and rerun setup; it selects or downloads Python 3.12 and backs up the incompatible `.venv` |
 | Ollama unavailable / model absent | Check `ollama list`, start its service, pull the selected model, or explicitly choose playbook |
 | Model times out | Reduce model size; free RAM; use playbook for the presentation; inspect local Ollama logs |
 | Assessment connection refused | Start `mj lab`; confirm target port and that the service runs on the same machine |

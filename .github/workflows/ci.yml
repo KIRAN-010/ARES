@@ -3,6 +3,22 @@ on: [push, pull_request]
 permissions:
   contents: read
 jobs:
+  setup-from-python314:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: python -m venv .venv
+      - run: bash scripts/setup.sh
+      - run: .venv/bin/python -c "import sys; assert sys.version_info[:2] in {(3, 11), (3, 12)}"
   backend:
     runs-on: ubuntu-latest
     strategy:
